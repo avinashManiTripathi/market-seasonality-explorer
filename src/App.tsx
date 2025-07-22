@@ -6,6 +6,9 @@ import { useSetRecoilState } from 'recoil';
 import { volatilityDataAtom } from './store/calendarState';
 import CalendarView from './components/Calendar/CalendarView';
 import { format, eachDayOfInterval, subMonths, endOfMonth } from 'date-fns';
+import OrderBook from './components/OrderBook/OrderBook';
+import { Link, Route, Routes } from 'react-router-dom';
+import Dashboard from './pages/Dashboard';
 
 const App = () => {
   const setVolatility = useSetRecoilState(volatilityDataAtom);
@@ -26,13 +29,21 @@ const App = () => {
   }, []);
 
   return (
-    <Box p={4}>
-      <Flex justify="space-between" align="center">
-        <Heading size="md">Market Seasonality Explorer</Heading>
-        <DarkModeToggle />
-      </Flex>
-      <CalendarView />
-    </Box>
+    <Routes>
+      <Route path="/" element={<Box p={4}>
+        <Flex justify="space-between" align="center">
+          <Heading size="md">Market Seasonality Explorer</Heading>
+          <DarkModeToggle />
+         
+        </Flex>
+        <Link to="/dashboard">Go to Order Book</Link>
+        <CalendarView />
+        <OrderBook />
+      </Box>} />
+      <Route path="/dashboard" element={<Dashboard />} />
+    </Routes>
+
+
   );
 };
 
